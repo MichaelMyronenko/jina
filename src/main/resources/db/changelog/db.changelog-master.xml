@@ -1,0 +1,182 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <preConditions>
+        <runningAs username="root"/>
+    </preConditions>
+
+    <changeSet author="mmdance_liquibase" id="initial-migration">
+        <createTable tableName="category">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName='product'>
+            <column name='id' type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name='name' type="VARCHAR(45)">
+            </column>
+            <column name='description' type="TEXT"/>
+            <column name='price' type="DECIMAL"/>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_product_category" references="category(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mmdance_liquibase" id="add_user_and_role_tables">
+        <createTable tableName="user">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="BOOLEAN" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mmdance_liquibase" id="add_basket">
+        <createTable tableName="basket">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_basket_user" references="user(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="basket_product">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="basket_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_basket"
+                             references="basket(user_id)"/>
+            </column>
+            <column name="product_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_basket_product"
+                             references="product(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mmdance_liquibase" id="add_category_and_characteristic">
+        <createTable tableName="characteristic">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_additional" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="category_characteristic_value">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="value" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="characteristic_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_value_characteristic" references="characteristic(id)"/>
+            </column>
+            <column name="category_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_value_category" references="category(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="product_characteristic_value">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="value" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_characteristic_value_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_value_category_characteristic"
+                             references="category_characteristic_value(id)"/>
+            </column>
+            <column name="product_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_value_product" references="product(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mmdance_liquibase" id="add_order_table">
+        <createTable tableName="order">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="string_id" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_price" type="DECIMAL"/>
+            <column name="order_status" type="VARCHAR(45)"/>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_order_user" references="user(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="order_product">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_order" references="order(id)"/>
+            </column>
+            <column name="product_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_order_product"
+                             references="product(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mmdance_liquibase" id="add_product_quantity_to_basket">
+        <addColumn tableName="basket_product">
+            <column name="quantity" position="3" type="INTEGER"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="mmdance_liquvase" id="add_active_column_to_basket">
+        <addColumn tableName="basket">
+            <column name="active" type="BOOLEAN" defaultValue="true"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="mmdance_liquibase" id="add_permission_table">
+        <createTable tableName="permission">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_permission_user" references="user(id)"/>
+            </column>
+            <column name="permission" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

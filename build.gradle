@@ -1,0 +1,73 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+}
+
+group = 'com.develop'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'D:\\infobip-spring-data-querydsl\\infobip-spring-data-jdbc-annotation-processor\\target\\'
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.apache.commons:commons-lang3'
+    implementation 'org.liquibase:liquibase-core'
+
+    implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    implementation "io.springfox:springfox-swagger2:$springfoxSwaggerVersion"
+    implementation "io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion"
+
+    implementation "org.bouncycastle:bcprov-jdk15on:$bcprovVersion"
+    implementation "commons-codec:commons-codec:$commonsCodecVersion"
+
+    implementation "com.infobip:infobip-spring-data-jdbc-querydsl:4.0.0"
+    implementation "com.querydsl:querydsl-apt:4.4.0"
+    implementation "com.querydsl:querydsl-sql-codegen:4.4.0"
+
+    implementation "com.infobip:infobip-spring-data-jdbc-annotation-processor:4.0.0"
+//    annotationProcessor "com.querydsl:querydsl-apt:4.4.0"
+    annotationProcessor "com.infobip:infobip-spring-data-jdbc-annotation-processor:4.0.0"
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.10.7'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.10.7'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.10.7'
+
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+compileJava{
+    options.compilerArgs = [
+            '-Amapstruct.defaultComponentModel=spring'
+    ]
+}
+
