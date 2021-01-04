@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.Objects;
@@ -16,7 +17,10 @@ import java.util.Objects;
 @Table("category")
 public class Category {
     @Id
+    @Column("id")
     private Long id;
+
+    @Column("title")
     private String title;
 
     @Override

@@ -16,9 +16,6 @@ configurations {
 
 repositories {
     mavenCentral()
-    flatDir {
-        dirs 'D:\\infobip-spring-data-querydsl\\infobip-spring-data-jdbc-annotation-processor\\target\\'
-    }
 }
 
 dependencies {
@@ -35,17 +32,13 @@ dependencies {
     implementation "org.bouncycastle:bcprov-jdk15on:$bcprovVersion"
     implementation "commons-codec:commons-codec:$commonsCodecVersion"
 
-    implementation "com.infobip:infobip-spring-data-jdbc-querydsl:4.0.0"
-    implementation "com.querydsl:querydsl-apt:4.4.0"
-    implementation "com.querydsl:querydsl-sql-codegen:4.4.0"
+    implementation "com.infobip:infobip-spring-data-jdbc-querydsl:${infobipVersion}"
 
-    implementation "com.infobip:infobip-spring-data-jdbc-annotation-processor:4.0.0"
-//    annotationProcessor "com.querydsl:querydsl-apt:4.4.0"
-    annotationProcessor "com.infobip:infobip-spring-data-jdbc-annotation-processor:4.0.0"
+    annotationProcessor "com.infobip:infobip-spring-data-jdbc-annotation-processor:${infobipVersion}"
 
-    implementation 'io.jsonwebtoken:jjwt-api:0.10.7'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.10.7'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.10.7'
+    implementation "io.jsonwebtoken:jjwt-api:${jsonWebTokenVersion}"
+    runtimeOnly "io.jsonwebtoken:jjwt-impl:${jsonWebTokenVersion}"
+    runtimeOnly "io.jsonwebtoken:jjwt-jackson:${jsonWebTokenVersion}"
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
