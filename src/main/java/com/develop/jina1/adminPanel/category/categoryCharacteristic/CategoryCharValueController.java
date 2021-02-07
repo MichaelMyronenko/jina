@@ -18,7 +18,7 @@ public class CategoryCharValueController {
         return new ResponseEntity<>(characteristicValueService.getAllCharacteristicValues(categoryId), HttpStatus.OK);
     }
 
-    @GetMapping("/{characteristicValueId}}")
+    @GetMapping("/{characteristicValueId}")
     ResponseEntity<CategoryCharValueDto> getCharacteristicValuesByCategory(@PathVariable Long categoryId,
                                                                            @PathVariable Long characteristicValueId) {
         return new ResponseEntity<>(characteristicValueService

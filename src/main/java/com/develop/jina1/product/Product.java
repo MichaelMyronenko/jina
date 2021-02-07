@@ -1,14 +1,15 @@
 package com.develop.jina1.product;
 
-import com.develop.jina1.product.productCharacteristic.ProdCharValue;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.Instant;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -35,13 +36,6 @@ public class Product {
 
     @Column("category_id")
     private Long categoryId;
-
-    @Column("product_id")
-    private Set<ProdCharValue> prodCharValues;
-
-    public void addProductCharacteristic(ProdCharValue characteristicValue) {
-        prodCharValues.add(characteristicValue);
-    }
 
     @Override
     public boolean equals(Object o) {

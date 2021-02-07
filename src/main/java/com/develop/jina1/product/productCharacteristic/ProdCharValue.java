@@ -17,11 +17,16 @@ import java.util.Objects;
 @Table("product_characteristic_value")
 public class ProdCharValue {
     @Id
+    @Column("id")
     private Long id;
-    @Column("product_id")
+
+    @Column("product")
     private Long productId;
+
     @Column("category_characteristic_value_id")
     private Long categoryCharacteristicValueId;
+
+    @Column("value")
     private String value;
 
     @Override

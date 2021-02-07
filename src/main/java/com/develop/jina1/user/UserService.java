@@ -30,7 +30,7 @@ public class UserService {
 
     public UserDto registerUser(UserCreationCommand userCreationCommand) {
         if (userRepository.findByUsername(userCreationCommand.getUsername()).isPresent()) {
-            throw new ConflictException("AuthenticatedUser with username " + userCreationCommand.getUsername() + " is already exist");
+            throw new ConflictException("AuthenticatedUser with username " + userCreationCommand.getUsername() + " already exists");
         }
         User user = userMapper.dtoToEntity(userCreationCommand);
         user.setPassword(passwordEncoder.encode(userCreationCommand.getPassword()));

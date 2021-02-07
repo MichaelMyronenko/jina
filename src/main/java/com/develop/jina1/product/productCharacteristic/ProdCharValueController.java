@@ -18,8 +18,8 @@ public class ProdCharValueController {
         return new ResponseEntity<>(characteristicValueService.getProdCharValues(productId), HttpStatus.OK);
     }
 
-    @GetMapping("/{characteristicValueId}}")
-    ResponseEntity<ProdCharValueDto> getCharacteristicValuesByCategory(@PathVariable Long productId,
+    @GetMapping("/{characteristicValueId}")
+    ResponseEntity<ProdCharValueDto> getCharacteristicValueByCategory(@PathVariable Long productId,
                                                                        @PathVariable Long characteristicValueId) {
         return new ResponseEntity<>(characteristicValueService
                 .getProdCharValue(productId, characteristicValueId), HttpStatus.OK);

@@ -5,6 +5,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.function.Function;
 
 public class OptionalBooleanBuilder {
@@ -30,7 +31,7 @@ public class OptionalBooleanBuilder {
     }
 
     public <T> OptionalBooleanBuilder notEmptyAnd(Function<Collection<T>, BooleanExpression> expressionFunction, Collection<T> collection) {
-        if (!CollectionUtils.isEmpty(collection)) {
+        if (Objects.nonNull(collection) && !CollectionUtils.isEmpty(collection)) {
             return new OptionalBooleanBuilder(predicate.and(expressionFunction.apply(collection)));
         }
         return this;

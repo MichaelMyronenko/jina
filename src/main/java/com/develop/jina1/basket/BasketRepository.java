@@ -7,7 +7,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface BasketRepository extends QuerydslJdbcRepository<Basket, Long> {
-    @Query("SELECT basket.user_id AS user_id " +
+    @Query("SELECT basket.user_id AS user_id, " +
+            "basket.id AS id, " +
+            "basket.active AS active " +
             "FROM basket WHERE user_id = :userId;")
     Optional<Basket> findByUserId(@Param("userId") Long userId);
 }

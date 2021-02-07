@@ -13,13 +13,15 @@ import java.util.stream.Collectors;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private final CategoryFilterBuilder categoryFilterBuilder;
 
     public CategoryDto getCategory(Long categoryId) {
         return categoryMapper.mapToDto(processCategory(categoryId));
     }
 
-    public List<CategoryDto> getCategories() {
-        return categoryRepository.findAll()
+    public List<CategoryDto> getCategories(CategoryFilterCommand categoryFilterCommand) {
+        return categoryRepository
+                .findAll(categoryFilterBuilder.build(categoryFilterCommand))
                 .stream().map(categoryMapper::mapToDto)
                 .collect(Collectors.toList());
     }

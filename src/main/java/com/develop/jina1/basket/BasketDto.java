@@ -13,6 +13,10 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BasketDto {
+    private Long id;
+
+    private Long userId;
+
     private Set<BasketProductRefDto> products;
 
     private Double total_price;

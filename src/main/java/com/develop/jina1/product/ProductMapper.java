@@ -7,12 +7,10 @@ import org.mapstruct.MappingTarget;
 @Mapper
 public interface ProductMapper {
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "prodCharValues", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     Product mapDtoToEntity(ProductCommand productDto);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "prodCharValues", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     void dtoToEntity(ProductCommand productCommand, @MappingTarget Product product);
 

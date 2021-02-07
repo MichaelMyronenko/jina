@@ -6,9 +6,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -16,14 +16,15 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final CategoryService categoryService;
+    private final ProductFilterBuilder productFilterBuilder;
 
     public ProductDto getProduct(Long productId) {
         return productMapper.mapEntityToDto(processProduct(productId));
     }
 
     public List<ProductDto> getProducts(ProductFilteringCommand productFilteringCommand) {
-        List<Product> products = new ArrayList<>(productRepository.findAll(new ProductFilterBuilder().build(productFilteringCommand)));
-        return products
+        return productRepository
+                .findAll(productFilterBuilder.build(productFilteringCommand))
                 .stream().map(productMapper::mapEntityToDto)
                 .collect(Collectors.toList());
     }

@@ -29,15 +29,11 @@ public class AuthenticatedUser implements UserDetails {
     }
 
     public boolean hasRole(Role role) {
-        return getAuthorities().stream()
-                .findFirst()
-                .map(GrantedAuthority::getAuthority)
-                .stream().anyMatch(authority -> authority.equals(role.name()));
+        return getRole().equals(role.name());
     }
 
     public boolean hasPermission(PermissionEnum permission) {
-        return getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
+        return getPermissions().stream()
                 .anyMatch(authority -> authority.equals(permission.name()));
     }
 

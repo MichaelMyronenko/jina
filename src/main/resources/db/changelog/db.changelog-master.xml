@@ -118,7 +118,7 @@
                 <constraints nullable="false" foreignKeyName="fk_value_category_characteristic"
                              references="category_characteristic_value(id)"/>
             </column>
-            <column name="product_id" type="BIGINT">
+            <column name="product" type="BIGINT">
                 <constraints nullable="false" foreignKeyName="fk_value_product" references="product(id)"/>
             </column>
         </createTable>

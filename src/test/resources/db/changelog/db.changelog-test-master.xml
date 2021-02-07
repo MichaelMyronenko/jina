@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <preConditions>
+        <runningAs username="sa"/>
+    </preConditions>
+
+    <changeSet author="mmdance_liquibase" id="initial-migration">
+        <createTable tableName="category">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName='product'>
+            <column name='id' type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name='name' type="VARCHAR(45)">
+            </column>
+            <column name='description' type="TEXT"/>
+            <column name='price' type="DECIMAL"/>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_product_category" references="category(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mmdance_liquibase" id="add_user_and_role_tables">
+        <createTable tableName="user">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="BOOLEAN" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mmdance_liquibase" id="add_basket">
+        <createTable tableName="basket">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_basket_user" references="user(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="basket_product">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="basket_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_basket"
+                             references="basket(user_id)"/>
+            </column>
+            <column name="product_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_basket_product"
+                             references="product(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mmdance_liquibase" id="add_category_and_characteristic">
+        <createTable tableName="characteristic">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_additional" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="category_characteristic_value">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="value" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="characteristic_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_value_characteristic" references="characteristic(id)"/>
+            </column>
+            <column name="category_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_value_category" references="category(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="product_characteristic_value">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="value" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_characteristic_value_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_value_category_characteristic"
+                             references="category_characteristic_value(id)"/>
+            </column>
+            <column name="product" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_value_product" references="product(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mmdance_liquibase" id="add_order_table">
+        <createTable tableName="order_table">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="string_id" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_price" type="DECIMAL"/>
+            <column name="order_status" type="VARCHAR(45)"/>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_order_user" references="user(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="order_product">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_product_order" references="order_table(id)"/>
+            </column>
+            <column name="product_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_order_product" references="product(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mmdance_liquibase" id="add_product_quantity_to_basket">
+        <addColumn tableName="basket_product">
+            <column name="quantity" position="3" type="INTEGER"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="mmdance_liquvase" id="add_active_column_to_basket">
+        <addColumn tableName="basket">
+            <column name="active" type="BOOLEAN" defaultValue="true"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="mmdance_liquibase" id="add_permission_table">
+        <createTable tableName="permission">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_permission_user" references="user(id)"/>
+            </column>
+            <column name="permission" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mmdance_liquibase" id="test_insertions">
+        <insert tableName="category">
+            <column name="title" value="Laptops and computers"/>
+        </insert>
+        <insert tableName="category">
+            <column name="title" value="Smartphones"/>
+        </insert>
+        <insert tableName="category">
+            <column name="title" value="Alcohol"/>
+        </insert>
+        <insert tableName="category">
+            <column name="title" value="Household products"/>
+        </insert>
+        <insert tableName="category">
+            <column name="title" value="Plumbing"/>
+        </insert>
+        <insert tableName="category">
+            <column name="title" value="Children's products"/>
+        </insert>
+        <insert tableName="user">
+            <column name="username" value="testUser"/>
+            <column name="password"
+                    value="00cef2ddd1dc7598a21da4b30055b2d8caf2ebe92ffd6e4f0c9e877f10f261b1f532afcb17e9c0bc6daab5b00774f18a"/>
+            <column name="role" value="USER"/>
+            <column name="active" value="true"/>
+        </insert>
+        <insert tableName="user">
+            <column name="username" value="anotherTestUser"/>
+            <column name="password"
+                    value="00cef2ddd1dc7598a21da4b30055b2d8caf2ebe92ffd6e4f0c9e877f10f261b1f532afcb17e9c0bc6daab5b00774f18a"/>
+            <column name="role" value="USER"/>
+            <column name="active" value="true"/>
+        </insert>
+        <insert tableName="basket">
+            <column name="user_id" value="1"/>
+            <column name="active" value="true"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="user_id" value="1"/>
+            <column name="permission" value="MANAGE_CATEGORY"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="user_id" value="2"/>
+            <column name="permission" value="MANAGE_CATEGORY"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="user_id" value="2"/>
+            <column name="permission" value="MANAGE_CHARACTERISTIC"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="user_id" value="2"/>
+            <column name="permission" value="MANAGE_USER_PERMISSIONS"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="user_id" value="2"/>
+            <column name="permission" value="MANAGE_USER_ROLES"/>
+        </insert>
+        <insert tableName="characteristic">
+            <column name="name" value="Processor"/>
+            <column name="is_additional" value="false"/>
+        </insert>
+        <insert tableName="characteristic">
+            <column name="name" value="Weight"/>
+            <column name="is_additional" value="false"/>
+        </insert>
+        <insert tableName="characteristic">
+            <column name="name" value="Screen diagonal"/>
+            <column name="is_additional" value="false"/>
+        </insert>
+        <insert tableName="category_characteristic_value">
+            <column name="value" value="Intel core 7gen"/>
+            <column name="characteristic_id" value="1"/>
+            <column name="category_id" value="1"/>
+        </insert>
+        <insert tableName="category_characteristic_value">
+            <column name="value" value="2kg"/>
+            <column name="characteristic_id" value="2"/>
+            <column name="category_id" value="1"/>
+        </insert>
+        <insert tableName="category_characteristic_value">
+            <column name="value" value="24"/>
+            <column name="characteristic_id" value="3"/>
+            <column name="category_id" value="1"/>
+        </insert>
+        <insert tableName="product">
+            <column name="name" value="Test Laptop"/>
+            <column name="description" value="Some test Laptop"/>
+            <column name="price" value="500"/>
+            <column name="created_at" value="now()"/>
+            <column name="category_id" value="1"/>
+        </insert>
+        <insert tableName="product">
+            <column name="name" value="Another Laptop"/>
+            <column name="description" value="Another test Laptop"/>
+            <column name="price" value="600"/>
+            <column name="created_at" value="now()"/>
+            <column name="category_id" value="1"/>
+        </insert>
+        <insert tableName="product">
+            <column name="name" value="Bukhlo"/>
+            <column name="description" value="Drinking"/>
+            <column name="price" value="100"/>
+            <column name="created_at" value="now()"/>
+            <column name="category_id" value="3"/>
+        </insert>
+        <insert tableName="product">
+            <column name="name" value="Another bukhlo"/>
+            <column name="description" value="Drinking"/>
+            <column name="price" value="40"/>
+            <column name="created_at" value="now()"/>
+            <column name="category_id" value="3"/>
+        </insert>
+        <insert tableName="basket_product">
+            <column name="basket_id" value="1"/>
+            <column name="product_id" value="2"/>
+            <column name="quantity" value="2"/>
+        </insert>
+        <insert tableName="product_characteristic_value">
+            <column name="category_characteristic_value_id" value="1"/>
+            <column name="product" value="1"/>
+            <column name="value" value="Intel core I7 08123"/>
+        </insert>
+        <insert tableName="product_characteristic_value">
+            <column name="category_characteristic_value_id" value="1"/>
+            <column name="product" value="2"/>
+            <column name="value" value="Intel core I7 08120"/>
+        </insert>
+        <insert tableName="orders">
+            <column name="string_id" value="1"/>
+            <column name="total_price" value="1500"/>
+            <column name="order_status" value="IN_PROCESS"/>
+            <column name="user_id" value="1"/>
+        </insert>
+        <insert tableName="orders">
+            <column name="string_id" value="2"/>
+            <column name="total_price" value="1000"/>
+            <column name="order_status" value="IN_PROCESS"/>
+            <column name="user_id" value="1"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,14 +1,12 @@
 package com.develop.jina1.product.productCharacteristic;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ProdCharValueCommand {
     private String value;
     private Long categoryCharacteristicValueId;

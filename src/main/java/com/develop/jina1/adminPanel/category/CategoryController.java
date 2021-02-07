@@ -19,8 +19,8 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CategoryDto>> getCategories() {
-        return new ResponseEntity<>(categoryService.getCategories(), HttpStatus.OK);
+    public ResponseEntity<List<CategoryDto>> getCategories(CategoryFilterCommand categoryFilterCommand) {
+        return new ResponseEntity<>(categoryService.getCategories(categoryFilterCommand), HttpStatus.OK);
     }
 
     @PostMapping

@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.3.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
+    id 'jacoco'
 }
 
 group = 'com.develop'
@@ -33,6 +34,7 @@ dependencies {
     implementation "commons-codec:commons-codec:$commonsCodecVersion"
 
     implementation "com.infobip:infobip-spring-data-jdbc-querydsl:${infobipVersion}"
+    implementation "com.querydsl:querydsl-sql-spring:4.4.0"
 
     annotationProcessor "com.infobip:infobip-spring-data-jdbc-annotation-processor:${infobipVersion}"
 
@@ -52,15 +54,27 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation "com.h2database:h2"
+}
+
+jacoco {
+    toolVersion = "0.8.5"
+    reportsDir = file("$buildDir/jacoco")
+}
+
+jacocoTestReport {
+    dependsOn test
 }
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
 compileJava{
     options.compilerArgs = [
-            '-Amapstruct.defaultComponentModel=spring'
+            '-Amapstruct.defaultComponentModel=spring',
+            '-parameters'
     ]
 }
 
