@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.develop.jina1.order.OrderStatus.*;
+import static com.develop.jina1.order.OrderStatus.IN_PROCESS;
 
 @Service
 @AllArgsConstructor

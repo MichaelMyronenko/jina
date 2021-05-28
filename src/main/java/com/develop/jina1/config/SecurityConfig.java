@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -20,7 +22,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     private final UserDetailsService userService;
     private final JwtConfigurer jwtConfigurer;
@@ -51,10 +53,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/js/**", "/api/auth/login", "/api/auth/register").permitAll()
+                .antMatchers("/js/**",
+                        "/api/auth/login",
+                        "/api/auth/register",
+                        "/api/auth/refresh_access_token").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .exceptionHandling().authenticationEntryPoint(http401UnauthorizedEntryPoint)
+                .exceptionHandling()
+                .authenticationEntryPoint(http401UnauthorizedEntryPoint)
                 .and()
                 .apply(jwtConfigurer);
     }
@@ -68,6 +74,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v2/api-docs")
                 .antMatchers("/")
                 .antMatchers(POST, "/api/auth/login")
+                .antMatchers(POST, "/api/auth/refresh_access_token")
                 .antMatchers(POST, "/api/auth/register");
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000")
+                .allowedMethods("*");
     }
 }

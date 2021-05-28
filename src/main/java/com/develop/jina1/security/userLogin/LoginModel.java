@@ -1,4 +1,4 @@
-package com.develop.jina1.security;
+package com.develop.jina1.security.userLogin;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

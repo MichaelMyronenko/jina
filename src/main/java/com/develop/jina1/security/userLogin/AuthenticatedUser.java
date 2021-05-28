@@ -1,8 +1,8 @@
-package com.develop.jina1.security;
+package com.develop.jina1.security.userLogin;
 
-import com.develop.jina1.user.permission.PermissionEnum;
 import com.develop.jina1.user.Role;
 import com.develop.jina1.user.User;
+import com.develop.jina1.user.permission.PermissionEnum;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class AuthenticatedUser implements UserDetails {
-    
+
     private final User user;
 
     @Override

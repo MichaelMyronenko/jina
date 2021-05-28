@@ -25,6 +25,6 @@ public interface BasketProductRefRepository extends QuerydslJdbcRepository<Baske
             "WHERE b.basket_id = :basketId " +
             "AND b.product_id = :productId;")
     void update(@Param("basketId") Long basketIf,
-                      @Param("productId") Long productId,
-                      @Param("quantity") Integer quantity);
+                @Param("productId") Long productId,
+                @Param("quantity") Integer quantity);
 }

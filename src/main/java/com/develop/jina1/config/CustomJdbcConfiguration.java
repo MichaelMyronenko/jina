@@ -1,6 +1,5 @@
 package com.develop.jina1.config;
 
-import com.querydsl.sql.H2Templates;
 import com.querydsl.sql.MySQLTemplates;
 import com.querydsl.sql.SQLQueryFactory;
 import com.querydsl.sql.SQLTemplates;
@@ -9,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 

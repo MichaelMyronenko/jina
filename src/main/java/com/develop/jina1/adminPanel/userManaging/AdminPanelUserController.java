@@ -1,6 +1,6 @@
 package com.develop.jina1.adminPanel.userManaging;
 
-import com.develop.jina1.security.AuthenticatedUser;
+import com.develop.jina1.security.userLogin.AuthenticatedUser;
 import com.develop.jina1.user.dto.UserDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

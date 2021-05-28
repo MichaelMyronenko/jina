@@ -20,6 +20,13 @@ public class ControllerExceptionHandler {
         return new ErrorResponseDto(defaultIfEmpty(ex.getMessage(), "Not found"));
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(UNAUTHORIZED)
+    protected ErrorResponseDto handleNotUnauthorizedException(UnauthorizedException ex) {
+        log.error(ex.getMessage());
+        return new ErrorResponseDto(defaultIfEmpty(ex.getMessage(), "Access Denied"));
+    }
+
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(UNAUTHORIZED)
     protected ErrorResponseDto handleNotFoundException(BadCredentialsException ex) {

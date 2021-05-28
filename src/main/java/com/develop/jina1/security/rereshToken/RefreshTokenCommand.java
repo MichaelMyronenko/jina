@@ -1,15 +1,14 @@
-package com.develop.jina1.security;
+package com.develop.jina1.security.rereshToken;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TokenDto {
-    private String accessToken;
+@Getter
+@Setter
+public class RefreshTokenCommand {
     private String refreshToken;
 }

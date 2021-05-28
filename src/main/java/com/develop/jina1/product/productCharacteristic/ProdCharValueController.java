@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api/products/{productId}/characteristicValues")
 public class ProdCharValueController {
     private final ProdCharValueService characteristicValueService;
-    
+
     @GetMapping
     ResponseEntity<List<ProdCharValueDto>> getAllCharacteristicValuesByCategory(@PathVariable Long productId) {
         return new ResponseEntity<>(characteristicValueService.getProdCharValues(productId), HttpStatus.OK);
@@ -20,7 +20,7 @@ public class ProdCharValueController {
 
     @GetMapping("/{characteristicValueId}")
     ResponseEntity<ProdCharValueDto> getCharacteristicValueByCategory(@PathVariable Long productId,
-                                                                       @PathVariable Long characteristicValueId) {
+                                                                      @PathVariable Long characteristicValueId) {
         return new ResponseEntity<>(characteristicValueService
                 .getProdCharValue(productId, characteristicValueId), HttpStatus.OK);
     }

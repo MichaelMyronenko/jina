@@ -33,7 +33,7 @@ public class ProdCharValueService {
 
         CategoryCharValue categoryCharValue = categoryCharValueService
                 .processCharacteristicValue(characteristicValueCommand
-                .getCategoryCharacteristicValueId());
+                        .getCategoryCharacteristicValueId());
 
         throwConflictIfProdCharValueExists(categoryCharValue.getCharacteristicId(), productId);
 

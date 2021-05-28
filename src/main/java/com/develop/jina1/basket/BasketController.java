@@ -1,7 +1,7 @@
 package com.develop.jina1.basket;
 
 import com.develop.jina1.basket.productRef.BasketProductRefCommand;
-import com.develop.jina1.security.AuthenticatedUser;
+import com.develop.jina1.security.userLogin.AuthenticatedUser;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class BasketController {
 
     @PostMapping
     public ResponseEntity<BasketDto> addProduct(@AuthenticationPrincipal AuthenticatedUser user,
-                                                 @RequestBody BasketProductRefCommand basketProductRefCommand) {
+                                                @RequestBody BasketProductRefCommand basketProductRefCommand) {
         return new ResponseEntity<>(basketService.addProductToBasket(user.getId(), basketProductRefCommand), HttpStatus.OK);
     }
 

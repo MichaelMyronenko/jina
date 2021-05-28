@@ -179,4 +179,18 @@
         </createTable>
     </changeSet>
 
+    <changeSet author="mmdance_liquibase" id="add_refresh_token_table">
+        <createTable tableName="refresh_token">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_refresh_token_user" references="user(id)"/>
+            </column>
+            <column name="uu_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>

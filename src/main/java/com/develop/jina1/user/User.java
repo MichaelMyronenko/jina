@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Table("user")
 public class User {
+
     @Id
     private Long id;
 

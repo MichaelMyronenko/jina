@@ -1,6 +1,6 @@
 package com.develop.jina1.order;
 
-import com.develop.jina1.security.AuthenticatedUser;
+import com.develop.jina1.security.userLogin.AuthenticatedUser;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

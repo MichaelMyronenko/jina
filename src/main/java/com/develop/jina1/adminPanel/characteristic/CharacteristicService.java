@@ -31,7 +31,7 @@ public class CharacteristicService {
         return characteristicMapper.mapToDto(characteristicRepository.save(characteristic));
     }
 
-    public Characteristic processCharacteristic(Long characteristicId){
+    public Characteristic processCharacteristic(Long characteristicId) {
         return characteristicRepository.findById(characteristicId)
                 .orElseThrow(() -> new NotFoundException("Not found characteristic with id " + characteristicId));
     }

@@ -1,4 +1,4 @@
-package com.develop.jina1.security;
+package com.develop.jina1.security.userLogin;
 
 import com.develop.jina1.error.NotFoundException;
 import com.develop.jina1.user.UserRepository;

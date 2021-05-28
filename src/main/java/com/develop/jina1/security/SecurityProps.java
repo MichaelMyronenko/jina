@@ -12,6 +12,8 @@ import java.time.Duration;
 @Setter
 @Component
 public class SecurityProps {
-    private String signature;
-    private Duration lifetime;
+    private String accessSignature;
+    private String refreshSignature;
+    private Duration accessTokenLifetime;
+    private Duration refreshTokenLifetime;
 }

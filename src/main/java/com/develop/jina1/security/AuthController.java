@@ -1,5 +1,8 @@
 package com.develop.jina1.security;
 
+import com.develop.jina1.security.rereshToken.RefreshTokenCommand;
+import com.develop.jina1.security.rereshToken.RefreshTokenService;
+import com.develop.jina1.security.userLogin.LoginModel;
 import com.develop.jina1.user.UserService;
 import com.develop.jina1.user.dto.UserCreationCommand;
 import com.develop.jina1.user.dto.UserDto;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class AuthController {
     private final UserService userService;
+    private final RefreshTokenService tokenService;
 
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody LoginModel authModel) {
@@ -25,5 +29,10 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<UserDto> registerUser(@RequestBody UserCreationCommand userCreationCommand) {
         return new ResponseEntity<>(userService.registerUser(userCreationCommand), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/refresh_access_token")
+    public ResponseEntity<TokenDto> refreshToken(@RequestBody RefreshTokenCommand tokenCommand) {
+        return new ResponseEntity<>(tokenService.refreshAccessToken(tokenCommand), HttpStatus.OK);
     }
 }

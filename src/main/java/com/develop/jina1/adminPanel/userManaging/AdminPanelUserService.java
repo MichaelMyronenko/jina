@@ -1,6 +1,6 @@
 package com.develop.jina1.adminPanel.userManaging;
 
-import com.develop.jina1.security.AuthenticatedUser;
+import com.develop.jina1.security.userLogin.AuthenticatedUser;
 import com.develop.jina1.user.*;
 import com.develop.jina1.user.dto.UserDto;
 import com.develop.jina1.user.permission.Permission;
@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
-import static com.develop.jina1.user.permission.PermissionEnum.*;
-import static com.develop.jina1.user.Role.*;
+import static com.develop.jina1.user.Role.ADMINISTRATOR;
+import static com.develop.jina1.user.permission.PermissionEnum.MANAGE_USER_PERMISSIONS;
+import static com.develop.jina1.user.permission.PermissionEnum.MANAGE_USER_ROLES;
 
 @Service
 @AllArgsConstructor
